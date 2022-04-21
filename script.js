@@ -20,8 +20,6 @@ async function checkName (name, state) {
     
     const check = await fetch (`https://api.opencorporates.com/v0.4/companies/search?q=${name}*&jurisdiction_code=${state}`);
     const json = await check.json();
-    const data = JSON.stringify(json.results.companies, null, 2);
-    console.log(data);
 
     if (json.results.companies.length === 0) {
         return true;
