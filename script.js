@@ -1,6 +1,5 @@
 const form = document.querySelector('#name_form');
 const popup = document.querySelector('.message');
-const results = document.querySelector('.results');
 
 form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -9,7 +8,8 @@ form.addEventListener('submit', async e => {
     const isTrue = await checkName(name, state);
 
     if (isTrue == true) {
-        popup.textContent = "Name is available";
+        window.location.href = "/claim-name-2";
+
     } else {
         popup.textContent = "Name is Taken";
     }
@@ -24,10 +24,8 @@ async function checkName (name, state) {
     console.log(data);
 
     if (json.results.companies.length === 0) {
-        results.textContent = '';
         return true;
     } else {
-        results.textContent = data;
         return false;
     }
 } 
