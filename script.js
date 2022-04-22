@@ -11,7 +11,7 @@ form.addEventListener('submit', async e => {
         window.location.href = "/claim-name-2";
 
     } else {
-        popup.textContent = "Name is Taken";
+        popup.textContent = "Shucks, that name is already taken in that state";
     }
 });
 
