@@ -15,7 +15,7 @@ form.addEventListener('submit', async e => {
     }
 
     if (isTrue == true) {
-        window.location.href = "/claim-name-2";
+        window.location.href = `/claim-name-2?businessName=${name}`;
 
     } else {
         popup.textContent = `Shucks, that name is already taken in ${stateName}.`;
