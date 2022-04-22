@@ -6,12 +6,19 @@ form.addEventListener('submit', async e => {
     const name = document.querySelector('[name="name"]').value;
     const state = document.querySelector('[name="states"').value;
     const isTrue = await checkName(name, state);
+    let stateName;
+
+    if (state == 'us_de') {
+        stateName = 'Delaware';
+    } else {
+        stateName = "Wyoming";
+    }
 
     if (isTrue == true) {
         window.location.href = "/claim-name-2";
 
     } else {
-        popup.textContent = "Shucks, that name is already taken in that state";
+        popup.textContent = `Shucks, that name is already taken in ${stateName}.`;
     }
 });
 
