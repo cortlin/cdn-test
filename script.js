@@ -1,36 +1,52 @@
-const form = document.querySelector('#name_form');
-const popup = document.querySelector('.message');
+const form = document.querySelector("#name_form");
+const popup = document.querySelector(".message");
 
-form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const name = document.querySelector('[name="name"]').value;
-    const state = document.querySelector('[name="states"').value;
-    const isTrue = await checkName(name, state);
-    let stateName;
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = document.querySelector('[name="name"]').value;
 
-    if (state == 'us_de') {
-        stateName = 'Delaware';
-    } else {
-        stateName = "Wyoming";
+  const checks = {
+    DE: await checkDelaware(name),
+    WY: await checkWyoming(name),
+  };
+
+  console.log(checks);
+
+  if (checks.DE == true || checks.WY == true) {
+    if (checks.DE && checks.WY) {
+      window.location.href = `/claim-name-2?businessName=${name}&states=Delaware+Wyoming`;
+    } else if (checks.DE == true) {
+      window.location.href = `/claim-name-2?businessName=${name}&states=Delaware`;
+    } else if (checks.WY == true) {
+      window.location.href = `/claim-name-2?businessName=${name}&states=Wyoming`;
     }
-
-    if (isTrue == true) {
-        window.location.href = `/claim-name-2?businessName=${name}`;
-
-    } else {
-        popup.textContent = `Shucks, that name is already taken in ${stateName}.`;
-    }
+  } else {
+    popup.textContent = `Shucks, that name is already taken.`;
+  }
 });
 
+async function checkDelaware(name) {
+  const check = await fetch(
+    `https://api.opencorporates.com/v0.4/companies/search?q=${name}*&jurisdiction_code=us_de`
+  );
+  const json = await check.json();
 
-async function checkName (name, state) {
-    
-    const check = await fetch (`https://api.opencorporates.com/v0.4/companies/search?q=${name}*&jurisdiction_code=${state}`);
-    const json = await check.json();
+  if (json.results.companies.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
-    if (json.results.companies.length === 0) {
-        return true;
-    } else {
-        return false;
-    }
-} 
+async function checkWyoming(name) {
+  const check = await fetch(
+    `https://api.opencorporates.com/v0.4/companies/search?q=${name}*&jurisdiction_code=us_wy`
+  );
+  const json = await check.json();
+
+  if (json.results.companies.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
