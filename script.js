@@ -1,6 +1,15 @@
 const form = document.querySelector("#name_form");
 const popup = document.querySelector(".message");
 
+// const query = window.location.search;
+
+// const urlParams = new URLSearchParams(query);
+
+// const paramStates = urlParams.get("states");
+// const paramName = urlParams.get("businessName");
+
+// const statesArray = paramStates.split(" ");
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const name = document.querySelector('[name="name"]').value;
@@ -9,8 +18,6 @@ form.addEventListener("submit", async (e) => {
     DE: await checkDelaware(name),
     WY: await checkWyoming(name),
   };
-
-  console.log(checks);
 
   if (checks.DE == true || checks.WY == true) {
     if (checks.DE && checks.WY) {
