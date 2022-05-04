@@ -28,7 +28,7 @@ form.addEventListener("submit", async (e) => {
       window.location.href = `/claim-name-2?businessName=${name}&states=Wyoming`;
     }
   } else {
-    popup.textContent = `Shucks, that name is already taken.`;
+    popup.textContent = `That name is already taken in Delaware and Wyoming.`;
   }
 });
 
